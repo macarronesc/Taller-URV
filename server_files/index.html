@@ -101,7 +101,9 @@
             messageText = `<strong><span style="font-size: 18px;">${message.deviceId}:</span></strong> ${message.message}`;
         } else {
             // Display messages from normal users with their deviceId
-            messageText = `<strong>usuari_random_${message.deviceId}:</strong> ${message.message}`;
+            //messageText = `<strong><span style="font-size: 28px;">usuari_random_${message.deviceId}:</span></strong> ${message.message}`;
+            //messageText = `<strong><span style="color: red">usuari_random_${message.deviceId}:</span></strong> ${message.message}`;
+            messageText = `<strong><span">usuari_random_${message.deviceId}:</span></strong> ${message.message}`;
         }
 
         const messageElement = document.createElement('p');
