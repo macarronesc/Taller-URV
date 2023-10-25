@@ -61,13 +61,16 @@
       </div>
     </div>
     <div class="row mt-4">
-      <div class="col-10"> <!-- Adjusted column width -->
-        <input id="messageInput" class="form-control" type="text" placeholder="Missatge..." onkeydown="sendMessageOnEnter(event)">
+      <div class="col-10">
+        <input id="messageInput" class="form-control" type="text" placeholder="Message..." onkeydown="sendMessageOnEnter(event)">
       </div>
-      <div class="col-2 d-flex align-items-center justify-content-center"> <!-- Adjusted column width and alignment -->
-        <button id="sendMessage" class="btn btn-primary rounded-circle"><i class="fas fa-arrow-circle-right"></i></button> <!-- Add arrow icon -->
+      <div class="col-2 d-flex align-items-center justify-content-center">
+        <button id="sendMessage" class="btn btn-primary rounded-circle"><i class="fas fa-arrow-circle-right"></i></button>
       </div>
-    </div>
+      <!-- <div class="col-12 text-center mt-4">
+        <button id="clearChat" class="btn btn-danger">Borrar chat</button>
+      </div> -->
+    </div>    
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
@@ -111,6 +114,16 @@
         messagesDiv.appendChild(messageElement);
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
     });
+
+    // Function to clear the chat messages
+    function clearChat() {
+      const messagesDiv = document.querySelector('#messages');
+      messagesDiv.innerHTML = ''; // Clear the chat by removing all inner HTML
+    }
+
+    // Attach a click event listener to the clear chat button
+    document.querySelector('#clearChat').addEventListener('click', clearChat);
+
 
   </script>
 </body>
