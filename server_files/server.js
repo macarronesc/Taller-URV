@@ -1,8 +1,26 @@
+const { initializeApp } = require("firebase/app");
+const { getFirestore } = require("firebase/firestore");
+const { doc, setDoc } = require("firebase/firestore");
+
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const readline = require('readline'); // Add readline for reading from console
 
+// Inicializa Firebase and Firestore
+const firebaseApp = initializeApp({
+  apiKey: "AIzaSyDGFFZdyFZQ49SJvtCJ1SMrxZqCvulMpok",
+  authDomain: "commerce-fullstack.firebaseapp.com",
+  projectId: "commerce-fullstack",
+  storageBucket: "commerce-fullstack.appspot.com",
+  messagingSenderId: "52519311748",
+  appId: "1:52519311748:web:9baecc47271556c76225d1",
+  measurementId: "G-4CZCK20DDN"
+});
+
+const db = getFirestore();
+
+// Create an express app
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
@@ -27,6 +45,12 @@ io.on('connection', (socket) => {
     const deviceId = deviceIds.get(socket.id);
     console.log(`Device ID ${deviceId} sent a message: ${message}`);
 
+    // Store the message in Firestore
+    let messageId = "message" + new Date().toISOString();
+    setDoc(doc(db, "messages", String(deviceId)), {
+      [messageId]: message,
+    }, { merge: true });
+  
     // Broadcast the message to all connected clients
     io.emit('chat message', { deviceId, message });
   });
