@@ -9,13 +9,13 @@ const readline = require('readline'); // Add readline for reading from console
 
 // Inicializa Firebase and Firestore
 const firebaseApp = initializeApp({
-  apiKey: "AIzaSyDGFFZdyFZQ49SJvtCJ1SMrxZqCvulMpok",
-  authDomain: "commerce-fullstack.firebaseapp.com",
-  projectId: "commerce-fullstack",
-  storageBucket: "commerce-fullstack.appspot.com",
-  messagingSenderId: "52519311748",
-  appId: "1:52519311748:web:9baecc47271556c76225d1",
-  measurementId: "G-4CZCK20DDN"
+  apiKey: "AIzaSyDaMfY6LefAJ0f-JY63bFk-UN-x3_e32qw",
+  authDomain: "taller-urv.firebaseapp.com",
+  projectId: "taller-urv",
+  storageBucket: "taller-urv.appspot.com",
+  messagingSenderId: "762377341091",
+  appId: "1:762377341091:web:8714606681ad6192139716",
+  measurementId: "G-LKQWVZ6731"
 });
 
 const db = getFirestore();
