@@ -1,139 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Chat Explorant el Món de les Aplicacions</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
-  <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore-compat.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <style>
-    h1 {
-      font-size: 36px;
-      color: #075e54;
-      text-align: center;
-      font-weight: bold;
-    }
-
-    h2 {
-      font-size: 24px;
-      color: #23ca61;
-      text-align: center;
-    }
-
-    #messages {
-      min-height: 300px;
-      max-height: 500px;
-      overflow-y: scroll;
-      border: 1px solid #ccc;
-      padding: 10px;
-      border-radius: 10px;
-      background-color: #f9f9f9;
-    }
-
-    #messageInput {
-      border-radius: 20px;
-    }
-
-    #sendMessage {
-      background-color: #23ca61;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    #sendMessage:hover {
-      background-color: #128c7e;
-    }
-  </style>
+<title>Page Title</title>
 </head>
 <body>
-  <div class="container-fluid"> 
-    <h1 class="text-center mt-4">Explorant el Món de les Aplicacions</h1>
-    <h2 class="text-center">Taller per a Joves Innovadors</h2>
-    <div class="row mt-4">
-      <div class="col-12">
-        <div id="messages" class="p-3 rounded"></div>
-      </div>
-    </div>
-    <div class="row mt-4">
-      <div class="col-10">
-        <input id="messageInput" class="form-control" type="text" placeholder="Message..." onkeydown="sendMessageOnEnter(event)">
-      </div>
-      <div class="col-2 d-flex align-items-center justify-content-center">
-        <button id="sendMessage" class="btn btn-primary rounded-circle"><i class="fas fa-arrow-circle-right"></i></button>
-      </div>
-    </div>    
-  </div>
 
-  <script>
-    // Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyDaMfY6LefAJ0f-JY63bFk-UN-x3_e32qw",
-        authDomain: "taller-urv.firebaseapp.com",
-        projectId: "taller-urv",
-        storageBucket: "taller-urv.firebasestorage.app",
-        messagingSenderId: "762377341091",
-        appId: "1:762377341091:web:8714606681ad6192139716",
-        measurementId: "G-LKQWVZ6731"
-    };
+<h1 id="titulo">This is a Heading</h1>
+<p>This is a paragraph.</p>
+<button id="boton">Clicka aquí</button>
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+<script type="module">
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-analytics.js";
 
-    function sendMessageOnEnter(event) {
-      if (event.key === 'Enter') {
-        const message = document.querySelector('#messageInput').value;
-        if (message.trim() !== '') {
-          sendMessage(message);
-          document.querySelector('#messageInput').value = '';
-        }
-      }
-    }
+  // Aquestes credencials te la donarán al crear la teva aplicació web dins del teu projecte (Tercer botó dins de la pagina principal)
+  const firebaseConfig = {
+    apiKey: "XXXXXXXXXXX",
+    authDomain: "XXXXXXXX",
+    projectId: "lXXXXXX",
+    storageBucket: "XXXXXXXXX",
+    messagingSenderId: "XXXXXXXXX",
+    appId: "XXXXXXXXXXX",
+    measurementId: "XXXXXXXXXX"
+  };
 
-    document.querySelector('#sendMessage').addEventListener('click', () => {
-      const message = document.querySelector('#messageInput').value;
-      if (message.trim() !== '') {
-        sendMessage(message);
-        document.querySelector('#messageInput').value = '';
-      }
-    });
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
 
-    function sendMessage(message) {
-      const deviceId = Math.floor(Math.random() * 10000);
-      const messageData = { deviceId, message, timestamp: firebase.firestore.FieldValue.serverTimestamp() };
-      db.collection("messages").add(messageData);
-    }
 
-    function displayMessage(message) {
-      const messagesDiv = document.querySelector('#messages');
-      let messageText;
+  // NOU CODI
+  const db = getFirestore(app);
 
-      if (message.deviceId === 'El Admin') {
-        messageText = `<strong><span style="font-size: 18px;">${message.deviceId}:</span></strong> ${message.message}`;
-      } else {
-        messageText = `<strong><span>usuari_random_${message.deviceId}:</span></strong> ${message.message}`;
-      }
+  document.querySelector('#boton').addEventListener('click', async () => {
+    document.querySelector('#titulo').textContent = 'Nuevo texto';
+    
+    // NOU CODI
+    const datos = { message: "Nuevo dato agregado" };
+    await addDoc(collection(db, "prueba"), datos);
 
-      const messageElement = document.createElement('p');
-      messageElement.innerHTML = messageText;
-      messagesDiv.appendChild(messageElement);
-      messagesDiv.scrollTop = messagesDiv.scrollHeight;
-    }
-
-    // Listen for new messages in Firestore
-    db.collection("messages").orderBy("timestamp").onSnapshot((snapshot) => {
-      snapshot.docChanges().forEach((change) => {
-        if (change.type === "added") {
-          displayMessage(change.doc.data());
-        }
-      });
-    });
-  </script>
+  });
+</script>
 </body>
 </html>
